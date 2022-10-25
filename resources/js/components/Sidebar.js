@@ -3,41 +3,36 @@ import ReactDOM from "react-dom";
 import classNames from "classnames/bind";
 import styles from "./App.module.scss";
 import Draggable from "react-draggable";
+import { v4 as uuidv4 } from "uuid";
 
 const cx = classNames.bind(styles);
 
 function Sidebar() {
-    const [count, setCount] = useState(0);
-    const [counts, setCounts] = useState([]);
+    const [listItem, setListItem] = useState([]);
 
-    const  handleDelete = (indexToDelete) => {
-        console.log(indexToDelete);
-    }
+    const handleAddItem = () => {
+        const newListItem = [...listItem]
+        const id = uuidv4();
+        newListItem.push({id})
+        setListItem(newListItem);
+    };
 
-    // useEffect(() => {
-    //      handleDelete = (index) => {
-    //         console.log(index);
-    //         counts.splice(index,1);
-    //         setCounts(counts);
-    //         console.log(counts);
-            
-    //     };
-    // },[counts])
+    const handleDelete = (indexToDelete) => {
+        const newListItem = [...listItem];
+        newListItem.splice(indexToDelete,1);
+        setListItem(newListItem);
+    };
 
-    useEffect(() => {
-        setCounts((prev) => [...prev, count]);
-        console.log(counts);
-    }, [count]);
     return (
-        <div className="sidebar">
-            <div className={cx("sign")} onClick={() => setCount(count + 1)}>
+        <div className={cx("sidebar")}>
+            <div className={cx("sign")} onClick={handleAddItem}>
                 <div>Chữ ký</div>
             </div>
-            {counts.map((count, index) => (
+            {listItem.map((item,index) => (
                 <Draggable
-                    key={index}
+                    key={item.id}
                     handle=".handle"
-                    defaultPosition={{ x: 0, y: 30 }}
+                    defaultPosition={{ x: index*20, y: index*20 }}
                     position={null}
                     grid={[25, 25]}
                     scale={1}
