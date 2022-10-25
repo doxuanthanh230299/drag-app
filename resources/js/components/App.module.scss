@@ -1,0 +1,24 @@
+.main {
+    display: flex;
+}
+
+.side-bar {
+    background-color: red;
+    width: 20%;
+    height: 1000px;
+    position: relative;
+}
+
+.sign {
+    border: 1px solid;
+    cursor: pointer;
+}
+.sign-drag {
+    border: 1px solid;
+    cursor: pointer;
+    width: 100%;
+}
+
+.container {
+    width: 80%;
+}
